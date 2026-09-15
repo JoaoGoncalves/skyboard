@@ -1,5 +1,8 @@
 <h1>Flight Search</h1>
 
+<!-- <app-simple-delay-stepper [value]="maxDelay()" (valueChange)="maxDelay.set($event)" /> -->
+<app-simple-delay-stepper [(value)]="maxDelay"/>
+
 <form>
   <div>
     <label for="from">From:</label>
@@ -16,8 +19,10 @@
   </div>
 </form>
 
+<h2>{{ flightRoute() }}</h2>
+
 @if (!error() && flights().length > 0) {
-<table>
+<!-- <table>
   <tr>
     <th>Id</th>
     <th>From</th>
@@ -35,10 +40,23 @@
     <td>{{ flight.delayed }}</td>
   </tr>
   }
-</table>
+</table> -->
 
-<hr>
-<pre>{{ selectedFlight() | json}}</pre>
+<div class="row">
+  @for (flight of flights(); track flight.id) {
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+      <app-flight-card
+        [item]="flight"
+        [selected]="basket()[flight.id]"
+        (selectedChange)="updateBasket(flight.id, $event)"
+      >
+      <div>The flight #{{flight.id}} might be delayed, check the monitors</div>  
+      <div class="footer">All rights reserved</div>
+    </app-flight-card>
+    </div>
+  }
+</div>
+
 <hr>
 @if (error()) {
   <div>Error: {{ error() | json }}</div>
