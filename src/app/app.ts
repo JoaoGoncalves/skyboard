@@ -4,10 +4,11 @@ import { Component, signal } from '@angular/core';
 import { Navbar } from './shell/navbar/navbar';
 import { Sidebar } from './shell/sidebar/sidebar';
 import { FlightSearch } from "./domains/ticketing/feature-booking/flight-search/flight-search";
+import { BoardingList } from './domains/ticketing/feature-boarding/boarding-list/boarding-list';
 
 @Component({
   selector: 'app-root',
-  imports: [/* RouterOutlet,  */Navbar, Sidebar, FlightSearch],
+  imports: [/* RouterOutlet,  */ Navbar, Sidebar, FlightSearch, BoardingList],
   templateUrl: './app.html',
 })
 export class App {

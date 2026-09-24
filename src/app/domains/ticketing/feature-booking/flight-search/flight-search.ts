@@ -26,8 +26,6 @@ export class FlightSearch {
   });
 
   protected readonly filterForm = form(this.filter);
-  //protected readonly flights = signal<Flight[]>([]);
-  //protected readonly selectedFlight = signal<Flight | null>(null);
 
   protected readonly flightsResource = httpResource<Flight[]>(
     () => {
@@ -49,26 +47,6 @@ export class FlightSearch {
     },
   );
 
-  /* protected readonly flightsResource = rxResource({
-    params: () => {
-      const filter = this.filter();
-      return filter.from && filter.to ? filter : undefined
-    },
-    //stream: (loaderparams) => this.find(loaderparams.params.from, loaderparams.params.to),
-    //stream: ({params}) => this.find(params.from, params.to),
-    stream: ({params}) => this.find(params.from, params.to),
-    defaultValue: [],
-  }); */
-
-  /* protected readonly flightsResource = resource({
-    params: () => ({ from: this.filter().from, to: this.filter().to }),
-    loader: ({ params, abortSignal }) =>
-      fetch(`${API_URL}?from=${params.from}&to=${params.to}`, { signal: abortSignal }).then(
-        (r) => r.json() as Promise<Flight[]>,
-      ),
-    defaultValue: [],
-  }); */
-
   protected readonly flights = this.flightsResource.value;
   protected readonly error = this.flightsResource.error;
   protected readonly isLoading = this.flightsResource.isLoading;
@@ -89,33 +67,6 @@ export class FlightSearch {
     const dest = untracked(() => this.to());
     return `${origin} ➔ ${dest}`;
   });
-
-  constructor(){
-   /*  effect(()=> {
-      const filter = this.filter();
-      console.log("From: ", filter.from);
-      console.log("To: ", filter.to);
-    })
-   this.showError();
-
-   afterNextRender(()=> {
-    console.log("From: (x1)", this.filter().from);
-   })
-
-   afterEveryRender(()=> {
-    console.log("From: (every render)", this.filter().from);
-   }) */
-  
-  }
-
-
-  /* ngOnInit(): void {
-    effect( ()=> console.log(this.filter()), {injector: this.injector})
-  } */
-
-  /* private find(from: string, to: string): Observable<Flight[]> {
-    return this.http.get<Flight[]>(API_URL, { params: { from, to } });
-  } */
 
   protected updateBasket(flightId: number, selected: boolean): void {
     this.basket.update((basket) => ({
@@ -139,10 +90,4 @@ export class FlightSearch {
     this.flightsResource.reload();
   }
 
-  private showError(){
-    effect(()=> {
-      const error = this.error();
-      if (error) this.snackBar.open('Error Loading flights', 'OK')
-    });
-  }
 }

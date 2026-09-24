@@ -1,0 +1,40 @@
+<h1>Boarding List</h1>
+
+<form>
+    <input type="text" [formField]="newNameForm" placeholder="Passenger name">
+    <button type="button" (click)="add()" [disabled]="!newName().trim()"> Add</button>
+</form>
+<section>
+    <p>{{boardedCount()}} / {{total()}} boarded</p>
+    <article>
+        <button type="button" (click)="boardAll()">All</button>
+        <button type="button" (click)="reset()">reset</button>
+    </article>
+    <article>
+        <button type="button" (click)="filter.set('all')" [class.active] ='filter() === "all"'>All</button>
+        <button type="button" (click)="filter.set('boarded')" [class.active] ='filter() === "boarded"'>Boarded</button>
+        <button type="button" (click)="filter.set('pending')" [class.active] ='filter() === "pending"'>Pending</button>
+    </article>
+</section>
+
+<ul>
+    @for (p  of visible(); track p.id) {
+     <app-passenger-row [passenger]="p"  (boardedChange)="toggle(p.id)"/>
+    } @empty {
+        <p>No passengers.</p>
+    }
+</ul>
+@if (allboarded()) {
+    <p><strong>Porta Fechada - bom</strong></p>
+}
+
+@let f = filter();
+@switch (f) {
+    @case ('all') { <h2>Todos</h2>}
+    @case ('boarded') { <h2>Embarcados</h2>}
+    @case ('pending') { <h2>Por Embarcar</h2>}
+    @default never;
+}
+
+<hr>
+<pre>{{passengers() | json}}</pre>
