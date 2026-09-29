@@ -7,9 +7,9 @@ import { Router } from '@angular/router';
   templateUrl: './home.html',
 })
 export class Home {
-  protected readonly router = inject(Router);
+  private readonly router = inject(Router);
 
-  protected startSearch():void{
-    this.router.navigate(['/booking/flight-search'])
+  protected startSearch(): void {
+    this.router.navigate(['/ticketing/booking/flight-search']);
   }
 }

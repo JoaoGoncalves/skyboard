@@ -1,6 +1,6 @@
 <h1>Flight Search</h1>
 
-<app-simple-delay-stepper [(value)]="maxDelay"/>
+<app-simple-delay-stepper [(value)]="maxDelay" />
 
 <form>
   <div>
@@ -30,10 +30,10 @@
         [selected]="basket()[flight.id]"
         (selectedChange)="updateBasket(flight.id, $event)"
       >
-      <button class="action" [routerLink]="['../flight-edit', flight.id, {showDetails: true}]">Edit</button>
-      <div>The flight #{{flight.id}} might be delayed, check the monitors</div>  
-      <div class="footer">All rights reserved</div>
-    </app-flight-card>
+        <button class="actions" [routerLink]="['../flight-edit', flight.id, { showDetails: true }]">Edit</button>
+        <div>The flight #{{ flight.id }} might be delayed, check the monitors</div>
+        <div class="footer">All rights reserved</div>
+      </app-flight-card>
     </div>
   }
 </div>
@@ -62,5 +62,5 @@
 
 <hr>
 <div>
-  <pre>{{basket() | json}}</pre>
+  <pre>{{ basket() | json }}</pre>
 </div>

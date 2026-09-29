@@ -1,14 +1,12 @@
-import { afterEveryRender, afterNextRender, Component, computed, effect, inject, Injector, resource, signal, untracked } from '@angular/core';
-import { form, FormField } from '@angular/forms/signals';
-import { Flight } from '../../data/flight';
-import { HttpClient, httpResource } from '@angular/common/http';
-import { API_URL } from '../../data/api';
-import { FlightCard } from '../../ui/flight-card/flight-card';
-import { SimpleDelayStepper } from '../../../shared/ui-common/simple-delay-stepper/simple-delay-stepper';
-
-import {MatSnackBar} from '@angular/material/snack-bar';
-import { RouterLink } from '@angular/router';
 import { JsonPipe } from '@angular/common';
+import { httpResource } from '@angular/common/http';
+import { Component, computed, signal, untracked } from '@angular/core';
+import { form, FormField } from '@angular/forms/signals';
+import { RouterLink } from '@angular/router';
+import { SimpleDelayStepper } from '../../../shared/ui-common/simple-delay-stepper/simple-delay-stepper';
+import { API_URL } from '../../data/api';
+import { Flight } from '../../data/flight';
+import { FlightCard } from '../../ui/flight-card/flight-card';
 
 @Component({
   imports: [FormField, FlightCard, SimpleDelayStepper, RouterLink, JsonPipe],
@@ -16,10 +14,6 @@ import { JsonPipe } from '@angular/common';
   templateUrl: './flight-search.html',
 })
 export class FlightSearch {
-  private readonly http = inject(HttpClient);
-  private readonly snackBar = inject(MatSnackBar);
-  private readonly injector = inject(Injector)
-
   protected readonly filter = signal({
     from: 'Lisbon',
     to: 'Porto',
@@ -37,8 +31,8 @@ export class FlightSearch {
       return {
         url: API_URL,
         params: {
-          from: this.filter().from,
-          to: this.filter().to,
+          from: filter.from,
+          to: filter.to,
         },
       };
     },
@@ -76,18 +70,6 @@ export class FlightSearch {
   }
 
   protected search(): void {
-    /*  const filter = this.filter();
-    const params = {
-      from: filter.from,
-      to: filter.to,
-    }
-
-    this.http.get<Flight[]>(API_URL, {params}).subscribe({
-      next: flights => this.flights.set(flights),
-      error: err => console.error("error: ", err)
-    }) */
-
     this.flightsResource.reload();
   }
-
 }

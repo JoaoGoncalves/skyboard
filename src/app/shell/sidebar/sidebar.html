@@ -1,18 +1,18 @@
 <div class="sidebar-wrapper">
   <ul class="nav">
-    <li >
-      <a routerLink="home" routerLinkActive="active">
+    <li routerLinkActive="active">
+      <a routerLink="home">
         <p>Home</p>
       </a>
     </li>
 
-    <li >
-      <a routerLink="ticketing/booking" routerLinkActive="active">
+    <li routerLinkActive="active">
+      <a routerLink="ticketing/booking">
         <p>Booking</p>
       </a>
     </li>
 
-   <li [class.active]="boardingActive()">
+    <li routerLinkActive="active">
       <a routerLink="ticketing/boarding">
         <p>Boarding</p>
       </a>
@@ -24,7 +24,4 @@
       </a>
     </li>
   </ul>
-  @if(inTicketing()){
-    <h4>Ticketing</h4>
-  }
 </div>

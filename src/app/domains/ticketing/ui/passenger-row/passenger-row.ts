@@ -7,8 +7,8 @@ import { Passenger } from '../../data/passenger';
   templateUrl: './passenger-row.html',
 })
 export class PassengerRow {
-  passenger = input.required<Passenger>();
-  boardedChange = output();
+  readonly passenger = input.required<Passenger>();
+  readonly boardedChange = output();
 
   protected toggle(): void {
     this.boardedChange.emit();

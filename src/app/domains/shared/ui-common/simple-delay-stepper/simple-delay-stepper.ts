@@ -1,4 +1,4 @@
-import { Component, input, model, output } from '@angular/core';
+import { Component, model } from '@angular/core';
 
 @Component({
   imports: [],
@@ -6,15 +6,16 @@ import { Component, input, model, output } from '@angular/core';
   templateUrl: './simple-delay-stepper.html',
 })
 export class SimpleDelayStepper {
-  readonly value = model(0); // input() + output()
- /*  readonly value = input(0);
-  readonly valueChange = output<number>(); */
+  // model() = input() + output() com o sufixo Change:
+  //   readonly value = input(0);
+  //   readonly valueChange = output<number>();
+  readonly value = model(0);
 
-  protected increase(){
-    this.value.update( v => v + 15);
-  }
-  protected decrease(){
-    this.value.update( v => Math.max(v - 15, 0));
+  protected increase(): void {
+    this.value.update((v) => v + 15);
   }
 
+  protected decrease(): void {
+    this.value.update((v) => Math.max(v - 15, 0));
+  }
 }
