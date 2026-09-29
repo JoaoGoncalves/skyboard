@@ -1,17 +1,17 @@
 import { afterEveryRender, afterNextRender, Component, computed, effect, inject, Injector, resource, signal, untracked } from '@angular/core';
 import { form, FormField } from '@angular/forms/signals';
 import { Flight } from '../../data/flight';
-import { DatePipe, JsonPipe } from '@angular/common';
 import { HttpClient, httpResource } from '@angular/common/http';
 import { API_URL } from '../../data/api';
 import { FlightCard } from '../../ui/flight-card/flight-card';
 import { SimpleDelayStepper } from '../../../shared/ui-common/simple-delay-stepper/simple-delay-stepper';
-import { rxResource } from '@angular/core/rxjs-interop';
-import { Observable } from 'rxjs';
+
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { RouterLink } from '@angular/router';
+import { JsonPipe } from '@angular/common';
 
 @Component({
-  imports: [FormField, JsonPipe, FlightCard, SimpleDelayStepper],
+  imports: [FormField, FlightCard, SimpleDelayStepper, RouterLink, JsonPipe],
   selector: 'app-flight-search',
   templateUrl: './flight-search.html',
 })

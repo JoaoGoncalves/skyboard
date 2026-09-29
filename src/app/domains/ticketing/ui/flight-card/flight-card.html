@@ -10,21 +10,23 @@
     <p>Flight-No.: #{{ itemValue.id }}</p>
     <p>Date: {{ itemValue.date | date }}</p>
     <p>Delayed: {{ itemValue.delayed }}</p>
-    <p>
+    <div class="btn-row">
       @if (!selected()) {
-        <button (click)="select()">Select</button>
+      <button (click)="select()">Select</button>
       } @else {
-        <button (click)="deselect()">Remove</button>
+      <button (click)="deselect()">Remove</button>
       }
-    </p>
-    <p>
-      <ng-content >
-        <p>No aditional Information provided</p>
+      <ng-content select=".actions" />
+    </div>
+
+    <div class="card-extra">
+      <ng-content>
+        <p>No additional information provided</p>
       </ng-content>
-      
-    </p>
+    </div>
+
     <h5>
-      <ng-content select=".footer"></ng-content>
+      <ng-content select=".footer" />
     </h5>
   </div>
 </div>

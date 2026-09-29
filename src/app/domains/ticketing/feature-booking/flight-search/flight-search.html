@@ -30,6 +30,7 @@
         [selected]="basket()[flight.id]"
         (selectedChange)="updateBasket(flight.id, $event)"
       >
+      <button class="action" [routerLink]="['../flight-edit', flight.id, {showDetails: true}]">Edit</button>
       <div>The flight #{{flight.id}} might be delayed, check the monitors</div>  
       <div class="footer">All rights reserved</div>
     </app-flight-card>

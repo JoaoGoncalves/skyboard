@@ -188,7 +188,7 @@ table tbody tr:last-child td,
    3. Classes
    ══════════════════════════════════════════ */
 
-.active a {
+.active a, a.active {
   background: rgba(92, 68, 228, 0.06);
   color: var(--color-primary) !important;
   font-weight: var(--font-weight-bold);
