@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { About } from './shell/about/about';
 import { Home } from './shell/home/home';
 
 export const routes: Routes = [
@@ -18,7 +17,7 @@ export const routes: Routes = [
   },
   {
     path: 'about',
-    component: About,
+    loadComponent: () => import('./shell/about/about'),
   },
   {
     path: '**',

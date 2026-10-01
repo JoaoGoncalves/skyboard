@@ -2,5 +2,11 @@
 
 <p>Id: {{ id() }}</p>
 <p>Show details: {{ showDetails() }}</p>
+<p>
+    <button (click)="teste()">teste</button>
+</p>
+
+<a [routerLink]="[]" [queryParams]="{expertMode: true}" queryParamsHandling="merge" fragment="details"> Expert mode</a> &nbsp;|&nbsp;
 
 <a routerLink="../../flight-search">Back to search</a>
+

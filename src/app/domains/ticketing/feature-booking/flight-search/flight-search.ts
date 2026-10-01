@@ -1,12 +1,11 @@
 import { JsonPipe } from '@angular/common';
-import { httpResource } from '@angular/common/http';
-import { Component, computed, signal, untracked } from '@angular/core';
+
+import { Component, computed, inject, signal, untracked } from '@angular/core';
 import { form, FormField } from '@angular/forms/signals';
 import { RouterLink } from '@angular/router';
 import { SimpleDelayStepper } from '../../../shared/ui-common/simple-delay-stepper/simple-delay-stepper';
-import { API_URL } from '../../data/api';
-import { Flight } from '../../data/flight';
 import { FlightCard } from '../../ui/flight-card/flight-card';
+import { FlightClient } from '../../data/flight-client';
 
 @Component({
   imports: [FormField, FlightCard, SimpleDelayStepper, RouterLink, JsonPipe],
@@ -14,6 +13,10 @@ import { FlightCard } from '../../ui/flight-card/flight-card';
   templateUrl: './flight-search.html',
 })
 export class FlightSearch {
+
+  private readonly flightClient = inject(FlightClient);
+
+
   protected readonly filter = signal({
     from: 'Lisbon',
     to: 'Porto',
@@ -21,25 +24,10 @@ export class FlightSearch {
 
   protected readonly filterForm = form(this.filter);
 
-  protected readonly flightsResource = httpResource<Flight[]>(
-    () => {
-      const filter = this.filter();
-      if (!filter.from || !filter.to) {
-        return undefined;
-      }
+   protected readonly from = computed(() => this.filter().from);
+  protected readonly to = computed(() => this.filter().to);
 
-      return {
-        url: API_URL,
-        params: {
-          from: filter.from,
-          to: filter.to,
-        },
-      };
-    },
-    {
-      defaultValue: [],
-    },
-  );
+  protected readonly flightsResource = this.flightClient.findResource(this.from, this.to);
 
   protected readonly flights = this.flightsResource.value;
   protected readonly error = this.flightsResource.error;
@@ -53,8 +41,7 @@ export class FlightSearch {
 
   protected readonly maxDelay = signal(0);
 
-  protected readonly from = computed(() => this.filter().from);
-  protected readonly to = computed(() => this.filter().to);
+ 
 
   protected readonly flightRoute = computed(() => {
     const origin = this.from();

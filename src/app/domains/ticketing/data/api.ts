@@ -1,1 +1,0 @@
-export const API_URL = 'https://my-json-server.typicode.com/JoaoGoncalves/skyboard/flights';
