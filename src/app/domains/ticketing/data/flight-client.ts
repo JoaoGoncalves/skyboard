@@ -6,7 +6,7 @@ import { ConfigService } from '../../shared/util-common/config-service';
 @Service()
 export class FlightClient {
 
-    private readonly config = inject(ConfigService);
+  private readonly config = inject(ConfigService);
 
   findResource(from: Signal<string>, to: Signal<string>) {
     return httpResource<Flight[]>(
