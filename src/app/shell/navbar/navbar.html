@@ -5,11 +5,16 @@
       <span></span>
       <span></span>
     </button>
-    <img
-      src="/assets/logo-skyboard.png"
-      alt="Skyboard logo"
-      class="logo"
-      width="170"
-      height="47" />
+    <img src="/assets/logo-skyboard.png" alt="Skyboard logo" class="logo" width="170" height="47" />
   </div>
+
+  <div class="navbar-actions">
+    @if (auth.isLoggedIn()) {
+    <span>{{ auth.userName() }}</span>
+    <button type="button" (click)="auth.logout()">Logout</button>
+    } @else {
+    <button type="button" (click)="auth.login('Maria')">Login</button>
+    }
+  </div>
+
 </nav>

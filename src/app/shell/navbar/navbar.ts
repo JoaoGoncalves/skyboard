@@ -4,6 +4,7 @@ import {
   DOCUMENT,
   inject,
 } from '@angular/core';
+import { AuthStore } from '../../domains/shared/util-auth/auth-store';
 
 @Component({
   selector: 'app-navbar',
@@ -12,6 +13,9 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Navbar {
+
+  protected readonly auth = inject(AuthStore);
+
   private sidebarVisible = false;
 
   private document = inject(DOCUMENT);

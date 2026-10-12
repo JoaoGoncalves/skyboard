@@ -1203,3 +1203,13 @@ td.error-col app-validation-errors-pane {
     transform: rotate(360deg);
   }
 }
+
+
+.navbar-actions button {
+  border-color: var(--color-white);
+  color: var(--color-white);
+}
+
+.navbar-actions button:hover {
+  background: rgba(255, 255, 255, 0.18);
+}

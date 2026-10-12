@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { booleanAttribute, Component, inject, input } from '@angular/core';
 import { Router } from '@angular/router';
 import { LanguageService } from '../../domains/shared/util-common/language';
 
@@ -10,6 +10,8 @@ import { LanguageService } from '../../domains/shared/util-common/language';
 export class Home {
   private readonly router = inject(Router);
   private readonly language = inject(LanguageService);
+
+  readonly needsLogin = input(false, {transform: booleanAttribute});
 
   protected readonly userLang = this.language.getUserLang();
 
