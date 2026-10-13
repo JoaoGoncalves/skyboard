@@ -1,5 +1,5 @@
 import { inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
+import { CanActivateFn, CanMatchFn, Router } from '@angular/router';
 import { AuthStore } from './auth-store';
 
 export const authGuard: CanActivateFn = () => {
@@ -12,3 +12,5 @@ export const authGuard: CanActivateFn = () => {
 
   return router.createUrlTree(['/home'], {queryParams: {needsLogin: true}})
 }
+
+export const authMatch: CanMatchFn = () => inject(AuthStore).isLoggedIn() ;

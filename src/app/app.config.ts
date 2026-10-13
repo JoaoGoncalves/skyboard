@@ -3,11 +3,15 @@ import { PreloadAllModules, provideRouter, withComponentInputBinding, withExperi
 
 import { routes } from './app.routes';
 import { provideLanguageService } from './domains/shared/util-common/language';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { authInterceptor } from './domains/shared/util-auth/auth-interceptor';
+import { loggingInterceptor } from './domains/shared/ui-common/logging-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes, withComponentInputBinding(), withPreloading(PreloadAllModules), withExperimentalAutoCleanupInjectors()),
     provideLanguageService('browser'),
+    provideHttpClient(withInterceptors([loggingInterceptor, authInterceptor, ]))
   ],
 };

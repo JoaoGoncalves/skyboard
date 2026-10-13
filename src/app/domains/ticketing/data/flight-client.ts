@@ -1,6 +1,6 @@
 import { httpResource } from '@angular/common/http';
 import { inject, Service, Signal } from '@angular/core';
-import { Flight } from './flight';
+import { Flight, initialFlight } from './flight';
 import { ConfigService } from '../../shared/util-common/config-service';
 
 @Service()
@@ -27,5 +27,11 @@ export class FlightClient {
         defaultValue: [],
       },
     );
+  }
+
+  findByIdResource(id: Signal<number>){
+    return httpResource<Flight>( ()=> `${this.config.apiUrl}/${id()}` , {
+      defaultValue: initialFlight,
+    })
   }
 }
