@@ -1,20 +1,23 @@
 <h1>Flight Edit #{{ id() }}</h1>
 
-<form>
+<form [formRoot]="flightForm">
   <fieldset>
     <div class="form-group">
       <label for="from">From</label>
       <input id="from" class="form-control" [formField]="flightForm.from" />
+     <app-validation-pane [errors]="flightForm.from().errors()" />
     </div>
 
     <div class="form-group">
       <label for="to">To</label>
       <input id="to" class="form-control" [formField]="flightForm.to" />
+       <app-validation-pane [errors]="flightForm.to().errors()" />
     </div>
 
     <div class="form-group">
       <label for="date">Date</label>
       <input id="date" type="datetime-local" class="form-control" [formField]="flightForm.date" />
+      <app-validation-pane [errors]="flightForm.date().errors()" />
     </div>
 
     <div class="form-group">
@@ -24,11 +27,17 @@
       </label>
     </div>
 
-    <div class="form-group">
-      <label for="delay">Delay (min)</label>
-      <input id="delay" type="number" class="form-control" [formField]="flightForm.delay" />
-    </div>
+   @if (!flightForm.delay().hidden()) {
+  <div class="form-group">
+    <label for="delay">Delay (min)</label>
+    <input id="delay" type="number" class="form-control" [formField]="flightForm.delay" />
+    <app-validation-pane [errors]="flightForm.delay().errors()" />
+  </div>
+}
   </fieldset>
+ <app-validation-pane [errors]="flightForm().errors()" />
+  <button>Save</button>
+  <h4>{{message()}}</h4>
 </form>
 
 <a routerLink="../../flight-search">Back to search</a>
@@ -39,5 +48,4 @@
   dirty: {{ flightForm().dirty() }} · touched: {{ flightForm().touched() }} · invalid: {{ flightForm().invalid() }}
 </small>
 <pre>{{ flight() | json }}</pre>
-<pre>{{flightForm.from().errors() | json}}</pre>
-
+<pre>{{flightForm().errorSummary() | json}}</pre>

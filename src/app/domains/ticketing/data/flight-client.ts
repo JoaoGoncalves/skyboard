@@ -1,12 +1,14 @@
-import { httpResource } from '@angular/common/http';
+import { HttpClient, httpResource } from '@angular/common/http';
 import { inject, Service, Signal } from '@angular/core';
 import { Flight, initialFlight } from './flight';
 import { ConfigService } from '../../shared/util-common/config-service';
+import { firstValueFrom } from 'rxjs';
 
 @Service()
 export class FlightClient {
 
   private readonly config = inject(ConfigService);
+  private readonly http = inject(HttpClient)
 
   findResource(from: Signal<string>, to: Signal<string>) {
     return httpResource<Flight[]>(
@@ -34,4 +36,10 @@ export class FlightClient {
       defaultValue: initialFlight,
     })
   }
+
+  save(flight: Flight): Promise<Flight>{
+    return firstValueFrom(this.http.put<Flight>(`${this.config.apiUrl}/${flight.id}`, flight));
+  }
+
+
 }

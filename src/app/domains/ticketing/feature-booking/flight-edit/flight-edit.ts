@@ -9,11 +9,13 @@ import {
 } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { FlightClient } from '../../data/flight-client';
-import { form, FormField, FormRoot, minLength, required } from '@angular/forms/signals';
+import { form, FormField, FormRoot, minLength, required, TreeValidationResult } from '@angular/forms/signals';
 import { JsonPipe } from '@angular/common';
+import { flightSchema } from '../../data/flight-schema';
+import { ValidationPane } from '../../../shared/ui-forms/validation-errors/validation-pane';
 
 @Component({
-  imports: [RouterLink, FormField, FormRoot, JsonPipe],
+  imports: [RouterLink, FormField, FormRoot, JsonPipe, ValidationPane],
   selector: 'app-flight-edit',
   templateUrl: './flight-edit.html',
 })
@@ -31,12 +33,25 @@ export class FlightEdit {
     return {...flight, date: toLocalInput(flight.date)}
   })
 
-  protected readonly flightForm = form(this.flight, path => {
-    required(path.from),
-    required(path.to),
-    required(path.date),
-    minLength(path.from, 3)
+  protected readonly flightForm = form(this.flight, flightSchema, {
+    submission: {
+      action: () => this.save(),
+      onInvalid: (flightForm) => flightForm().errorSummary()[0]?.fieldTree().focusBoundControl()
+    }
   })
+
+  protected readonly message = signal('');
+
+  private async save(): Promise<TreeValidationResult>{
+    try {
+      const flight = this.flight();
+      await this.flightClient.save({...flight, date: new Date(flight.date).toISOString()});
+      this.flightForm().reset();
+      this.message.set('Saved');
+    } catch  {
+      return {kind: 'Server', message: 'Could not save the flight'}
+    }
+  }
 
   isDirty(): boolean {
     return this.flightForm().dirty();
