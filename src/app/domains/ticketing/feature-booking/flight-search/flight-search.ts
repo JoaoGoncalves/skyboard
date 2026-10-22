@@ -38,7 +38,8 @@ export class FlightSearch {
 
   protected readonly maxDelay = signal(0);
 
-  protected readonly flightRoute = computed(() => `${this.store.from()} ➜ ${this.store.to()}`);
+  protected readonly flightRoute = this.store.route;
+  protected readonly selectedCount = this.store.selectedCount;
 
   protected updateBasket(flightId: number, selected: boolean): void {
     this.store.updateBasket(flightId, selected);
