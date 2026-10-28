@@ -1,6 +1,12 @@
 <h1>Flight Search</h1>
 
-<app-simple-delay-stepper [(value)]="maxDelay" />
+@defer (on interaction; prefetch on idle) {
+  <app-simple-delay-stepper [(value)]="maxDelay" />
+} @placeholder {
+  <button type="button">Ajustar atraso</button>
+} @loading (minimum 500ms) {
+  <small>A carregar…</small>
+}
 
 <form>
   <div>

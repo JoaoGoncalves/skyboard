@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import { DefaultLanguageService, LanguageService } from '../../domains/shared/util-common/language';
 
 @Component({
@@ -9,4 +9,15 @@ import { DefaultLanguageService, LanguageService } from '../../domains/shared/ut
 })
 export default class About {
   protected readonly userLang = inject(LanguageService).getUserLang();
+
+  protected readonly now = signal(new Date().toLocaleTimeString());
+
+  constructor() {
+    const id = setInterval(() => {
+      this.now.set(new Date().toLocaleTimeString());
+      console.log('tick', this.now());
+    }, 1000);
+
+    inject(DestroyRef).onDestroy(() => clearInterval(id));
+  }
 }

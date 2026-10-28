@@ -1,2 +1,21 @@
 <h1>Passenger Search</h1>
-<p>Coming soon.</p>
+
+<form>
+  <label for="name">Name:</label>
+  <input [formField]="nameForm" id="name" />
+</form>
+
+@if (isLoading()) {
+  <small>A carregar…</small>
+}
+@if (error()) {
+  <div>Error: {{ error() }}</div>
+}
+
+<ul>
+  @for (p of passengers(); track p.id) {
+    <li>{{ p.name }} @if (p.boarded) { · embarcado }</li>
+  } @empty {
+    <li>Nenhum passageiro.</li>
+  }
+</ul>
